@@ -1,4 +1,4 @@
-def modify_train_loss_accuracy_from_batch_level_to_epoch_level(train_acc,train_losses):
+def modify_train_loss_accuracy_from_batch_level_to_epoch_level(train_acc,train_losses,trainloader):
   new_train_acc=[]
   sum=0
   count=0
