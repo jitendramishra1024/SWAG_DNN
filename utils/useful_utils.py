@@ -9,6 +9,7 @@ def modify_train_loss_accuracy_from_batch_level_to_epoch_level(train_acc,train_l
       new_train_acc.append(sumlen(trainloader))
       sum=0
 
+
   new_train_loss=[]
   sum=0
   count=0
