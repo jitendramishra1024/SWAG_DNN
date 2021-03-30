@@ -1,4 +1,4 @@
-from albumentations import Compose, RandomCrop, Normalize, HorizontalFlip, Resize,Rotate, Cutout, CoarseDropout
+from albumentations import Compose, RandomCrop, Normalize, HorizontalFlip, Resize,Rotate, Cutout, CoarseDropout,PadIfNeeded
 from albumentations.pytorch import ToTensor
 import numpy as np
 
@@ -10,10 +10,14 @@ class album_compose_train:
         self.mean1=mean
         self.std1=std
         self.albumentation_transforms = Compose([
-            Rotate((-7.0, 7.0)),
-            Cutout(num_holes=3, max_h_size=3, max_w_size=3),
-            CoarseDropout(),
+            #Rotate((-7.0, 7.0)),
+            PadIfNeeded(min_height=36, min_width=36),
+            RandomCrop(32, 32),
             HorizontalFlip(),
+            Cutout(num_holes=4),
+            #CoarseDropout(),
+            #HorizontalFlip(),
+            #RandomCrop(),
             Normalize(
                 mean=self.mean1,
                 std=self.std1
