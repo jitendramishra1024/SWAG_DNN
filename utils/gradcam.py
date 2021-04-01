@@ -141,7 +141,7 @@ def show_one_row_graph(images,mean,std,pred,actual,format='raw',mode="result"):
         ax[j].imshow(np.transpose(images[index].cpu().numpy(), (1, 2, 0))*std+mean, cmap="gray_r")
       elif format=='normalized':
         ax[j].imshow(np.transpose(images[index].cpu().numpy(), (1, 2, 0)), cmap="gray_r")
-def show_gradcam_for_n_images(n,images,predicted,actual,classes,model):
+def show_gradcam_for_n_images(n,missed_images,predicted,actual,classes,model):
   torch_img_list=missed_images[0:n]
   pred_list=predicted[0:n]
   actual_list=actual[0:n]
