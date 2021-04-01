@@ -181,7 +181,7 @@ def imshow(img,std,mean):
     fig = plt.figure(figsize=(10,10))
     plt.imshow(np.transpose(npimg, (1, 2, 0)),interpolation='none')
 
-def grad_cam_for_user_defined_images(img_name):
+def grad_cam_for_user_defined_images(img_name,device,mean,std):
   pil_image = []
   for i,img in enumerate(img_name):
     pil_image.append(PIL.Image.open(img))
