@@ -41,6 +41,43 @@ def get_misclassified(model, test_loader, device):
 
   return  misclassified, misclassified_pred, misclassified_target
   
+def get_properclassified(model, test_loader, device):
+    classified = []
+    misclassified_pred = []
+    misclassified_target = []
+    # put the model to evaluation mode
+    model.eval()
+    # turn off gradients
+    with torch.no_grad():
+      for data, target in test_loader:
+        # move them to the respective device
+        data, target = data.to(device), target.to(device)
+        # do inferencing
+        output = model(data)
+        # get the predicted output
+        pred = output.argmax(dim=1, keepdim=True)
+
+        # get the current misclassified in this batch
+        list_misclassified = (pred.eq(target.view_as(pred)) == True).squeeze()
+        #list_misclassified  = [item for sublist in list_misclassified  for item in sublist]
+        #print(list_misclassified)
+        #print(data.shape)
+        batch_misclassified = data[list_misclassified]
+        batch_mis_pred = pred[list_misclassified]
+        batch_mis_target = target.view_as(pred)[list_misclassified]
+
+        classified.append(batch_misclassified)
+        misclassified_pred.append(batch_mis_pred)
+        misclassified_target.append(batch_mis_target)
+        #print(len(misclassified))
+
+    # group all the batched together
+    classified = torch.cat(misclassified)
+    misclassified_pred = torch.cat(misclassified_pred)
+    misclassified_target = torch.cat(misclassified_target)
+
+  return  classified, misclassified_pred, misclassified_target
+  
   
   
  
