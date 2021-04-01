@@ -72,7 +72,7 @@ def get_properclassified(model, test_loader, device):
         #print(len(misclassified))
 
     # group all the batched together
-    classified = torch.cat(misclassified)
+    classified = torch.cat(classified)
     misclassified_pred = torch.cat(misclassified_pred)
     misclassified_target = torch.cat(misclassified_target)
 
