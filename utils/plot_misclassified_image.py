@@ -76,7 +76,7 @@ def get_properclassified(model, test_loader, device):
     misclassified_pred = torch.cat(misclassified_pred)
     misclassified_target = torch.cat(misclassified_target)
 
-  return  classified, misclassified_pred, misclassified_target
+    return  classified, misclassified_pred, misclassified_target
   
   
   
