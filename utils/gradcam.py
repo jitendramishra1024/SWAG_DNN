@@ -5,6 +5,7 @@ import torchvision.transforms as transforms
 import torch
 #gradcam 
 import torch.nn.functional as F
+import PIL
 class GradCAM:
     """Calculate GradCAM salinecy map.
     Args:
