@@ -129,7 +129,7 @@ def show_one_row_graph(images,mean,std,pred,actual,format='raw',mode="result"):
   else :
     l[0]="HeatMap :P:"+pred+"A:"+actual
 
-  fig, ax = plt.subplots(nrows, ncols, figsize=(10, 15))
+  fig, ax = plt.subplots(nrows, ncols, figsize=(15, 20))
   for j in range(ncols):
       index =  j
       ax[j].axis("off")
