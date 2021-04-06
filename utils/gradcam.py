@@ -172,6 +172,35 @@ import numpy as np
 import matplotlib.pyplot as plt
 import copy
 from torchvision.utils import make_grid, save_image
+
+
+
+def show_gradcam_for_n_images_only_result(n,missed_images,predicted,actual,classes,model,device,mean,std):
+  torch_img_list=missed_images[0:n]
+  pred_list=predicted[0:n]
+  actual_list=actual[0:n]
+  classes=classes
+  torch_img_list=[x.reshape(3, 32, 32) for x in torch_img_list ]
+  normed_torch_img=[x.reshape(1,3, 32, 32) for x in torch_img_list ]
+  for i,k in enumerate(normed_torch_img):
+    pred=classes[pred_list[i]]
+    actual=classes[actual_list[i]]
+    images1 = [torch_img_list[i].cpu()]
+    #images1 = np.transpose(torch_img_list[i].cpu().numpy(), (1, 2, 0))*std+mean
+    images2 =  [torch_img_list[i].cpu()]
+    b = copy.deepcopy(model.to(device))
+    layers =  [b.layer1,b.layer2,b.layer3,b.layer4]
+    for j in layers:
+      g = GradCAM(b,j)
+      mask, _= g(normed_torch_img[i])
+      heatmap, result = visualize_cam(mask,torch_img_list[i] )
+      #heatmap, result = visualize_cam(mask,unnormalize(images1, mean, std, out_type='tensor').clone().unsqueeze_(0).to(self.device) )
+      images1.extend([heatmap])
+      images2.extend([result])
+    #show_one_row_graph(images1,mean,std,pred,actual,format='raw',mode="heatmap")
+    show_one_row_graph(images2,mean,std,pred,actual,format='raw',mode="result")
+    
+    
 def imshow(img,std,mean):
     #img = img / 2 + 0.5     # unnormalize
     mean = np.array(mean)
