@@ -15,7 +15,7 @@ class album_compose_train:
             PadIfNeeded(min_height=36, min_width=36, border_mode = cv2.BORDER_REFLECT, always_apply=True),
             RandomCrop(32, 32),
             HorizontalFlip(),
-            Cutout(num_holes=1, max_h_size=16,max_w_size = 16,p=0.7),
+            Cutout(num_holes=1, max_h_size=8,max_w_size = 8,p=0.6),
             Normalize(
                 mean=self.mean1,
                 std=self.std1
