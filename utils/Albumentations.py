@@ -11,13 +11,10 @@ class album_compose_train:
         self.std1=std
         self.albumentation_transforms = Compose([
             #Rotate((-7.0, 7.0)),
-            PadIfNeeded(min_height=36, min_width=36),
+            PadIfNeeded(min_height=36, min_width=36, border_mode = cv2.BORDER_REFLECT, always_apply=True),
             RandomCrop(32, 32),
             HorizontalFlip(),
-            Cutout(num_holes=4),
-            #CoarseDropout(),
-            #HorizontalFlip(),
-            #RandomCrop(),
+            Cutout(num_holes=1, max_h_size=16,max_w_size = 16,p=0.7),
             Normalize(
                 mean=self.mean1,
                 std=self.std1
