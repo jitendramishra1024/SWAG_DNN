@@ -1,6 +1,7 @@
 from albumentations import Compose, RandomCrop, Normalize, HorizontalFlip, Resize,Rotate, Cutout, CoarseDropout,PadIfNeeded
 from albumentations.pytorch import ToTensor
 import numpy as np
+import cv2
 
 
 class album_compose_train:
