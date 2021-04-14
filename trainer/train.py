@@ -5,7 +5,7 @@ class Trainer():
   def __init__(self):
     self.train_losses = []
     self.train_acc = []
-
+      
 
   def train(self, model, device, train_loader, optimizer, loss_func, epoch, lambda_l1,scheduler=False ):
     model.train()
@@ -40,8 +40,10 @@ class Trainer():
       # Backpropagation
       loss.backward()
       optimizer.step()
-      #scheduler 
-      if(scheduler):
+      #scheduler only in case of one cycle LR
+      #if(scheduler):
+        #scheduler.step()
+      if isinstance(scheduler, torch.optim.lr_scheduler.OneCycleLR):
         scheduler.step()
 
 
