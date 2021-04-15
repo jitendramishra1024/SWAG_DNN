@@ -9,6 +9,12 @@ class Trainer():
       
 
   def train(self, model, device, train_loader, optimizer, loss_func, epoch, lambda_l1,scheduler=False ):
+    #to find loss for each epoch for reduce LR on plateau
+    epoch_loss_list=[]
+    epoch_loss=1
+    #if it is  step LR then update at every epoch      
+    if isinstance(scheduler, torch.optim.lr_scheduler.StepLR):
+        scheduler.step()
     model.train()
     pbar = tqdm(train_loader)
     correct = 0
@@ -35,6 +41,8 @@ class Trainer():
       for p in model.parameters():
         l1 = l1 + p.abs().sum()
       loss = loss + lambda_l1*l1
+      #to append loss for each iteration 
+      epoch_loss_list.append(loss)
 
       self.train_losses.append(loss)
 
@@ -42,8 +50,7 @@ class Trainer():
       loss.backward()
       optimizer.step()
       #scheduler only in case of one cycle LR
-      #if(scheduler):
-        #scheduler.step()
+      #if it is onecycle lr then update at every iteration 
       if isinstance(scheduler, torch.optim.lr_scheduler.OneCycleLR):
         scheduler.step()
 
@@ -56,6 +63,15 @@ class Trainer():
       pbar.set_description(desc= f'Train set: Loss={loss.item()} Batch_id={batch_idx} Accuracy={100*correct/processed:0.2f}')
       self.train_acc.append(100*correct/processed)
       tqdm._instances.clear()
+    #if it is  reduce LR on plateau  then update at every epoch 
+
+    if isinstance(scheduler, torch.optim.lr_scheduler.ReduceLROnPlateau):
+        if len(epoch_loss_list)!=0:
+            epoch_loss=sum(epoch_loss_list)/len(epoch_loss_list)
+            scheduler.step(epoch_loss)
+        else :
+            print("No loss is generated for any iteration  for this epoch")
+        
 
 
 
