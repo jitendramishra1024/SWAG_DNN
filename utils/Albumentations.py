@@ -1,4 +1,4 @@
-from albumentations import Compose, RandomCrop, Normalize, HorizontalFlip, Resize,Rotate, Cutout, CoarseDropout,PadIfNeeded,RGBShift(
+from albumentations import Compose, RandomCrop, Normalize, HorizontalFlip, Resize,Rotate, Cutout, CoarseDropout,PadIfNeeded,RGBShift
 from albumentations.pytorch import ToTensor
 import numpy as np
 import cv2
