@@ -8,7 +8,7 @@ class Trainer():
     self.train_acc = []
       
 
-  def train(self, model, device, train_loader, optimizer, loss_func, epoch, lambda_l1,scheduler=False ):
+  def train(self, model, device, train_loader, optimizer, loss_func, epoch, lambda_l1,scheduler):
     #to find loss for each epoch for reduce LR on plateau
     epoch_loss_list=[]
     epoch_loss=1
