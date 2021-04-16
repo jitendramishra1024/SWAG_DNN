@@ -1,4 +1,4 @@
-from albumentations import Compose, RandomCrop, Normalize, HorizontalFlip, Resize,Rotate, Cutout, CoarseDropout,PadIfNeeded
+from albumentations import Compose, RandomCrop, Normalize, HorizontalFlip, Resize,Rotate, Cutout, CoarseDropout,PadIfNeeded,RGBShift(
 from albumentations.pytorch import ToTensor
 import numpy as np
 import cv2
@@ -15,7 +15,8 @@ class album_compose_train:
             PadIfNeeded(min_height=36, min_width=36, border_mode = cv2.BORDER_REFLECT, always_apply=True),
             RandomCrop(32, 32),
             HorizontalFlip(),
-            Cutout(num_holes=2, max_h_size=6,max_w_size = 6,p=0.5),
+            Cutout(num_holes=2, max_h_size=8,max_w_size = 8,p=0.7),
+            RGBShift(r_shift_limit=20, g_shift_limit=20, b_shift_limit=20, p=0.5),
             Normalize(
                 mean=self.mean1,
                 std=self.std1
