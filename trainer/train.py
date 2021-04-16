@@ -70,7 +70,7 @@ class Trainer():
             epoch_loss=sum(epoch_loss_list)/len(epoch_loss_list)
             scheduler.step(epoch_loss)
             print()
-            print("Epoch avarage loss for epoch "+str(epoch+1)+" is "+ str(epoch_loss.cpu().detach().numpy() [0]))
+            print("Epoch avarage loss for epoch "+str(epoch+1)+" is "+ str(epoch_loss.cpu().detach().numpy()))
         else :
             print("No loss is generated for any iteration  for this epoch")
         
