@@ -9,7 +9,6 @@ class Trainer():
       
 
   def train(self, model, device, train_loader, optimizer, loss_func, epoch, lambda_l1,scheduler):
-    print("scheduler used is ",type(scheduler))
     #to find loss for each epoch for reduce LR on plateau
     epoch_loss_list=[]
     epoch_loss=1
@@ -71,7 +70,7 @@ class Trainer():
             epoch_loss=sum(epoch_loss_list)/len(epoch_loss_list)
             scheduler.step(epoch_loss)
             print()
-            print("Epoch avarage loss for epoch "+str(epoch)+" is "+ str(epoch_loss))
+            print("Epoch avarage loss for epoch "+str(epoch+1)+" is "+ str(epoch_loss.data.cpu().numpy()[0]))
         else :
             print("No loss is generated for any iteration  for this epoch")
         
