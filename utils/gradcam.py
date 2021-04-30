@@ -141,13 +141,13 @@ def show_one_row_graph(images,mean,std,pred,actual,format='raw',mode="result"):
         ax[j].imshow(np.transpose(images[index].cpu().numpy(), (1, 2, 0))*std+mean, cmap="gray_r")
       elif format=='normalized':
         ax[j].imshow(np.transpose(images[index].cpu().numpy(), (1, 2, 0)), cmap="gray_r")
-def show_gradcam_for_n_images(n,missed_images,predicted,actual,classes,model,device,mean,std):
+def show_gradcam_for_n_images(n,missed_images,predicted,actual,classes,model,device,mean,std,img_size=32):
   torch_img_list=missed_images[0:n]
   pred_list=predicted[0:n]
   actual_list=actual[0:n]
   classes=classes
-  torch_img_list=[x.reshape(3, 32, 32) for x in torch_img_list ]
-  normed_torch_img=[x.reshape(1,3, 32, 32) for x in torch_img_list ]
+  torch_img_list=[x.reshape(3, img_size, img_size) for x in torch_img_list ]
+  normed_torch_img=[x.reshape(1,3, img_size, img_size) for x in torch_img_list ]
   for i,k in enumerate(normed_torch_img):
     pred=classes[pred_list[i]]
     actual=classes[actual_list[i]]
@@ -175,13 +175,13 @@ from torchvision.utils import make_grid, save_image
 
 
 
-def show_gradcam_for_n_images_only_result(n,missed_images,predicted,actual,classes,model,device,mean,std):
+def show_gradcam_for_n_images_only_result(n,missed_images,predicted,actual,classes,model,device,mean,std, img_size=32):
   torch_img_list=missed_images[0:n]
   pred_list=predicted[0:n]
   actual_list=actual[0:n]
   classes=classes
-  torch_img_list=[x.reshape(3, 32, 32) for x in torch_img_list ]
-  normed_torch_img=[x.reshape(1,3, 32, 32) for x in torch_img_list ]
+  torch_img_list=[x.reshape(3, img_size, img_size) for x in torch_img_list ]
+  normed_torch_img=[x.reshape(1,3, img_size, img_size) for x in torch_img_list ]
   for i,k in enumerate(normed_torch_img):
     pred=classes[pred_list[i]]
     actual=classes[actual_list[i]]
